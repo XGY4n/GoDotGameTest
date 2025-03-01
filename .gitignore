@@ -1,0 +1,16 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+# 忽略 Visual Studio 相关文件
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# 忽略编译输出文件
+bin/
+obj/
+# 忽略其他不需要的文件
+*.log
+*.tmp
