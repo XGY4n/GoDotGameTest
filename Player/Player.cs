@@ -9,15 +9,31 @@ public partial class Player : CharacterBody2D
     private float colddownEnemy = 0.1f;
     private float shootTimerEnemy = 0.0f;
     private float shootTimer = 0.0f;
+    [Export]
+    public AnimatedSprite2D anima = new AnimatedSprite2D();
+    
     public override void _Ready()
     {
-        var texture = new GradientTexture2D();
-        var gradient = new Gradient();
-        gradient.AddPoint(0, Colors.White);
-        texture.Gradient = gradient;
-        texture.Width = 64; 
-        texture.Height = 64; 
-        GetNode<Sprite2D>("Sprite2D").Texture = texture;
+        var shader = new Shader();
+        shader.Code = @"
+        shader_type canvas_item;
+
+        uniform vec4 key_color : hint_color = vec4(106, 115, 100, 1.0); // 默认绿色
+
+        void fragment() {
+            vec4 tex_color = texture(TEXTURE, FRAGCOORD.xy / TEXTURE_PIXEL_SIZE);
+            if (distance(tex_color.rgb, key_color.rgb) < 0.1) {
+                discard;
+            }
+            COLOR = tex_color;
+        }
+    ";
+
+        var shaderMaterial = new ShaderMaterial();
+        shaderMaterial.Shader = shader;
+        shaderMaterial.Set("shader_param/key_color", new Color(106, 115, 100, 1));
+
+        anima.Material = shaderMaterial;
     }
     [Export] 
     public float MoveSpeed = 300.0f;
@@ -30,6 +46,15 @@ public partial class Player : CharacterBody2D
         Velocity = inputDirection * MoveSpeed * 2;
         MoveAndSlide();
 
+        if(Velocity == Vector2.Zero)
+        {
+            anima.Play("idle");
+
+        }
+        else
+        {
+            anima.Play("move");
+        }
         RestrictToScreenBounds();
 
         if (Input.IsActionPressed("ui_select") && shootTimer >= colddown) // 默认空格键对应 "ui_select" 输入动作

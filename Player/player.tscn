@@ -1,6 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://dvdx3kpprts0w"]
+[gd_scene load_steps=20 format=3 uid="uid://dvdx3kpprts0w"]
 
 [ext_resource type="Script" path="res://Player/Player.cs" id="1_sb3oe"]
+[ext_resource type="Texture2D" uid="uid://cevb3qi4wyjso" path="res://Assets/idle/ezgif-2f4e6aad879f47.png" id="3_kxkvn"]
 [ext_resource type="Texture2D" uid="uid://i1ceco54tfps" path="res://Assets/standing/ezgif-2f4e6aad879f47.png" id="4_q2p5u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ducbw"]
@@ -47,6 +48,22 @@ region = Rect2(3040, 850, 760, 850)
 atlas = ExtResource("4_q2p5u")
 region = Rect2(0, 1700, 760, 850)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_4wgty"]
+atlas = ExtResource("3_kxkvn")
+region = Rect2(0, 0, 760, 850)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2jjra"]
+atlas = ExtResource("3_kxkvn")
+region = Rect2(760, 0, 760, 850)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ev5fu"]
+atlas = ExtResource("3_kxkvn")
+region = Rect2(1520, 0, 760, 850)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_drjga"]
+atlas = ExtResource("3_kxkvn")
+region = Rect2(2280, 0, 760, 850)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_sg667"]
 animations = [{
 "frames": [{
@@ -84,18 +101,35 @@ animations = [{
 "texture": SubResource("AtlasTexture_cgamb")
 }],
 "loop": true,
-"name": &"wait",
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4wgty")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2jjra")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ev5fu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_drjga")
+}],
+"loop": true,
+"name": &"move",
 "speed": 5.0
 }]
 
-[node name="player" type="CharacterBody2D"]
+[node name="player" type="CharacterBody2D" node_paths=PackedStringArray("anima")]
 script = ExtResource("1_sb3oe")
+anima = NodePath("anima")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-position = Vector2(133, 145)
+[node name="anima" type="AnimatedSprite2D" parent="."]
+position = Vector2(134, 135)
 scale = Vector2(0.35, 0.311765)
 sprite_frames = SubResource("SpriteFrames_sg667")
-animation = &"wait"
-autoplay = "wait"
-frame_progress = 0.034897
+animation = &"idle"
+autoplay = "idle"
 speed_scale = 1.19
