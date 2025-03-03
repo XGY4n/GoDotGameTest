@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://ds8yp8lfoyvgv"]
+
+[ext_resource type="Texture2D" uid="uid://doene7ib4rqya" path="res://Assets/skybackground.png" id="1_mdfbc"]
+[ext_resource type="PackedScene" uid="uid://dvdx3kpprts0w" path="res://Player/player.tscn" id="2_efrwx"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-0.999954, 0.999989)
+scale = Vector2(1.59944, 1.6129)
+texture = ExtResource("1_mdfbc")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="player" parent="." instance=ExtResource("2_efrwx")]
+position = Vector2(146, 159)
